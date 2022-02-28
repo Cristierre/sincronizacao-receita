@@ -21,12 +21,11 @@ import java.util.List;
 
 public class EnvioService {
 
-    private final String CAMINHO_ARQUIVOS = "src/main/java/br/com/sincronizacaoreceita/files/";
 
-    public List<FileModel> lerArquivo(String nomeArquivo) {
+    public List<FileModel> lerArquivo(String caminhoArquivo) {
         List<FileModel> filesModels = new ArrayList<>();
         try (
-                Reader reader = Files.newBufferedReader(Paths.get(CAMINHO_ARQUIVOS+nomeArquivo));
+                Reader reader = Files.newBufferedReader(Paths.get(caminhoArquivo));
         ) {
             CsvToBean csvToBean = new CsvToBeanBuilder(reader)
                     .withType(FileModel.class)
@@ -47,14 +46,13 @@ public class EnvioService {
         return filesModels;
     }
 
-    public void escreverArquivo(List<FileModel> filesModels, String respostaReceita, String nomeArquivo) {
+    public void escreverArquivo(List<FileModel> filesModels, String respostaReceita, String caminhoArquivo) {
         List<FileConfirmationModel> filesConfirmationModels = new ArrayList<>();
 
-        filesModels.forEach(file -> {
-            filesConfirmationModels.add(new FileConfirmationModel().insereConfirmacaoDeEnvio(file, respostaReceita));
-        });
+        filesModels.forEach(file ->filesConfirmationModels.add(new FileConfirmationModel().insereConfirmacaoDeEnvio(file, respostaReceita)));
+
         try (
-                Writer writer = Files.newBufferedWriter(Paths.get(CAMINHO_ARQUIVOS+nomeArquivo));
+                Writer writer = Files.newBufferedWriter(Paths.get(caminhoArquivo));
         ) {
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
                     .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
@@ -68,14 +66,14 @@ public class EnvioService {
         }
     }
 
-    public void enviaDadosParaReceita(List<FileModel> fileModels){
+    public void enviaDadosParaReceita(List<FileModel> fileModels, String caminhoArquivo){
         ReceitaService receitaService = new ReceitaService();
         fileModels.forEach(info -> {
             try {
                 if(receitaService.atualizarConta(info.getAgencia(), info.getConta(), info.getSaldo(), info.getStatus())){
-                    escreverArquivo(fileModels,"OK", "informacoesProcessadas.csv");
+                    escreverArquivo(fileModels,"OK", caminhoArquivo);
                 }else{
-                    escreverArquivo(fileModels,"NOK", "informacoesProcessadas.csv");
+                    escreverArquivo(fileModels,"NOK", caminhoArquivo);
                 };
             } catch (InterruptedException e) {
                 e.printStackTrace();

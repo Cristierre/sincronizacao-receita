@@ -1,7 +1,11 @@
 package br.com.sincronizacaoreceita.model;
 
 import com.opencsv.bean.CsvBindByName;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FileConfirmationModel {
     @CsvBindByName(column = "agencia")
     private String agencia;
@@ -26,45 +30,5 @@ public class FileConfirmationModel {
         this.statusEnvio = confirmacao;
 
         return this;
-    }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public String getConta() {
-        return conta;
-    }
-
-    public void setConta(String conta) {
-        this.conta = conta;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatusEnvio() {
-        return statusEnvio;
-    }
-
-    public void setStatusEnvio(String statusEnvio) {
-        this.statusEnvio = statusEnvio;
     }
 }

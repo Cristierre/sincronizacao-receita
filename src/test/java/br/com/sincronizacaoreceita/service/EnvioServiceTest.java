@@ -1,18 +1,36 @@
 package br.com.sincronizacaoreceita.service;
 
 import br.com.sincronizacaoreceita.model.FileModel;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class EnvioServiceTest {
 
     EnvioService envioService;
 
+    @BeforeEach
+    public void instanciaEnvioService (){
+        envioService = new EnvioService();
+    }
+
     @Test
     public void deveRetornarListaDeArquivos(){
-        envioService = new EnvioService();
 
         List<FileModel> fileModels = envioService.lerArquivo("informacaoContas.csv");
 
@@ -21,7 +39,6 @@ public class EnvioServiceTest {
 
     @Test
     public void deveRetornarListaDeArquivosComNumContaSemHifen(){
-        envioService = new EnvioService();
 
         List<FileModel> fileModels = envioService.lerArquivo("informacaoContas.csv");
         fileModels.forEach(conta ->{
@@ -31,10 +48,30 @@ public class EnvioServiceTest {
 
     @Test
     public void deveRetornarArrayVazioQuandoNaoEncontraArquivo(){
-        envioService = new EnvioService();
 
         List<FileModel> fileModels = envioService.lerArquivo("arquivoTeste.csv");
 
         Assertions.assertTrue(fileModels.isEmpty());
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0101;122256;100.00;A",
+                "0101;122268;3200.50;A",
+                "3202;400111;-35.12;I",
+                "3202;540012;0.00;P",
+                "3202;003212;34500.00;B"}, delimiter = ';')
+    public void deveEscreverDadosDaContaNoArquivo(String agencia, String conta, double saldo, String status){
+        List<FileModel> fileModels = new ArrayList<>();
+        final String CAMINHO_ARQUIVO_TESTE = "src/test/java/br/com/sincronizacaoreceita/service/fileTest/escritaTeste.csv";
+
+        fileModels.add(new FileModel(agencia,conta,saldo,status));
+
+
+        envioService.escreverArquivo(fileModels,"OK", CAMINHO_ARQUIVO_TESTE);
+
+        List<FileModel> fileModelsExpected = envioService.lerArquivo(CAMINHO_ARQUIVO_TESTE);
+
+        Assertions.assertEquals(1, fileModelsExpected.size());
+        Assertions.assertEquals(new FileModel(agencia, conta, saldo, status), fileModelsExpected.get(0));
     }
 }

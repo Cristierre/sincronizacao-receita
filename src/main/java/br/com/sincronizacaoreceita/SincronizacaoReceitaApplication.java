@@ -35,9 +35,9 @@ public class SincronizacaoReceitaApplication {
 
 		EnvioService envioService = new EnvioService();
 
-		List<FileModel> fileModels = envioService.lerArquivo("informacaoContas.csv");
+		List<FileModel> fileModels = envioService.lerArquivo("src/main/java/br/com/sincronizacaoreceita/files/");
 
-		envioService.enviaDadosParaReceita(fileModels);
+		envioService.enviaDadosParaReceita(fileModels,"src/main/java/br/com/sincronizacaoreceita/files/informacoesProcessadas.csv");
 
 	}
 }

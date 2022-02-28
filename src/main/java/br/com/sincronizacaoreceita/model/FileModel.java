@@ -1,7 +1,14 @@
 package br.com.sincronizacaoreceita.model;
 
 import com.opencsv.bean.CsvBindByName;
+import lombok.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class FileModel {
 
     @CsvBindByName(column = "agencia")
