@@ -1,6 +1,6 @@
-#Sincronizador receita
+# Sincronizador receita
 
-##Requisitos para build
+## Requisitos para build
 - ter **maven** instalado e configurado;
 - Java JDK 11
 
