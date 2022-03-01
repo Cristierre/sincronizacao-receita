@@ -12,7 +12,8 @@
 	<artifactId>sincronizacao-receita</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sincronizacao-receita</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>jar</packaging>
+	<description>Projeto Processamento de Contas</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -44,13 +45,24 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<mainClass>br.com.sincronizacaoreceita.SincronizacaoReceitaApplication</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 

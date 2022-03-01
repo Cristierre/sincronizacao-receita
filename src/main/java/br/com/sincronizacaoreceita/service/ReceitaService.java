@@ -1,5 +1,7 @@
 package br.com.sincronizacaoreceita.service;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 

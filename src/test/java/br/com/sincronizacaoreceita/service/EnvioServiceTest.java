@@ -1,27 +1,18 @@
 package br.com.sincronizacaoreceita.service;
 
 import br.com.sincronizacaoreceita.model.FileModel;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 public class EnvioServiceTest {
 
+    private final String PATH_ARQUIVO_LEITURA = "src/test/java/br/com/sincronizacaoreceita/service/fileTest/leituraTeste.csv";
     EnvioService envioService;
 
     @BeforeEach
@@ -32,7 +23,7 @@ public class EnvioServiceTest {
     @Test
     public void deveRetornarListaDeArquivos(){
 
-        List<FileModel> fileModels = envioService.lerArquivo("informacaoContas.csv");
+        List<FileModel> fileModels = envioService.lerArquivo(PATH_ARQUIVO_LEITURA);
 
         Assertions.assertTrue(fileModels.size() > 0);
     }
@@ -40,7 +31,7 @@ public class EnvioServiceTest {
     @Test
     public void deveRetornarListaDeArquivosComNumContaSemHifen(){
 
-        List<FileModel> fileModels = envioService.lerArquivo("informacaoContas.csv");
+        List<FileModel> fileModels = envioService.lerArquivo(PATH_ARQUIVO_LEITURA);
         fileModels.forEach(conta ->{
             Assertions.assertFalse(conta.getConta().contains("-"));
         });
@@ -49,7 +40,7 @@ public class EnvioServiceTest {
     @Test
     public void deveRetornarArrayVazioQuandoNaoEncontraArquivo(){
 
-        List<FileModel> fileModels = envioService.lerArquivo("arquivoTeste.csv");
+        List<FileModel> fileModels = envioService.lerArquivo("arquivoInexistente.csv");
 
         Assertions.assertTrue(fileModels.isEmpty());
     }
