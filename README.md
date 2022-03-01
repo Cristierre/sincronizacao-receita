@@ -32,7 +32,8 @@ java -jar target/sincronizacao-receita-0.0.1-SNAPSHOT.jar <input-file>
 ```
 ## Diretório de arquivos
 O arquivo a ser processado deve ser inserido dentro do pacote:
-**src/main/java/br/com/sincronizacaoreceita/files**
-O arquivo resultante do processamento será salvo no mesmo diretório com o o nome **informacoesProcessadas**, nele havera uma coluna extra com o resultado do processamento:
+**src/main/java/br/com/sincronizacaoreceita/files** 
+
+O arquivo resultante do processamento será salvo no mesmo diretório com o o nome **informacoesProcessadas.csv**, nele haverá uma coluna extra com o resultado do processamento:
 - **OK** - indicando retorno positivo;
 - **NOK** - indicando retorno negativo;
