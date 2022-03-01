@@ -30,7 +30,7 @@ mvn package
 Feito isso, agora rode o seguinte comando para a execução do projeto, passando por parâmetro ao final da linha 
 de comando o nome do arquivo que deseja processar:
 ```
-java -jar target/sincronizacao-receita-0.0.1-SNAPSHOT.jar <input-file>
+java -jar target/sincronizacao-receita-0.0.1-SNAPSHOT.jar meuArquivoAProcessar.csv
 ```
 ## Diretório de arquivos
 O arquivo a ser processado deve ser inserido dentro do pacote:
