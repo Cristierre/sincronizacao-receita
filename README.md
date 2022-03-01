@@ -1,7 +1,7 @@
 # Sincronizador receita
 ## O que a aplicação faz?
 A aplicação processa um arquivo **.csv**, encaminhando os dados para o Banco Central e gerando
-um novo arquivo com o resultado obtidos da Receita Federal.
+um novo arquivo com o resultado obtido da Receita Federal.
 ## Requisitos para build
 - ter **maven** instalado e configurado;
 - Java JDK 11
